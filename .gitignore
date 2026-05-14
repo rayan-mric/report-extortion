@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment variables — NEVER commit these
+.env
+*/.env
+
+# React build output
+frontend/build/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
