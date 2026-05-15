@@ -20,14 +20,27 @@ app.use(helmet());
 // cors allows the React frontend (on a different port) to call this API
 app.use(
   cors({
-  origin: [
-    process.env.CLIENT_URL,
-    "https://www.report-extortion.info",
-    "https://report-extortion.info",
-    "http://localhost:3000"
-  ],
-  methods: ["GET", "POST", "PATCH"],
-})
+    origin: function (origin, callback) {
+      // Allow requests with no origin (mobile apps, curl, Postman)
+      if (!origin) return callback(null, true);
+      
+      const allowedOrigins = [
+        "https://report-extortion.info",
+        "https://www.report-extortion.info",
+        "http://localhost:3000"
+      ];
+
+      // Remove trailing slash then check
+      const cleanOrigin = origin.replace(/\/$/, "");
+      
+      if (allowedOrigins.includes(cleanOrigin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed: " + origin));
+      }
+    },
+    methods: ["GET", "POST", "PATCH"],
+  })
 );
 
 // Parse incoming JSON request bodies
