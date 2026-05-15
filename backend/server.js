@@ -20,9 +20,14 @@ app.use(helmet());
 // cors allows the React frontend (on a different port) to call this API
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    methods: ["GET", "POST", "PATCH"],
-  })
+  origin: [
+    process.env.CLIENT_URL,
+    "https://www.report-extortion.info",
+    "https://report-extortion.info",
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "PATCH"],
+})
 );
 
 // Parse incoming JSON request bodies
